@@ -1,0 +1,5 @@
+#surefire
+#Fri Apr 13 00:14:31 IST 2012
+user.dir=/home/mf/workspace/EclipseProjects/maven-archetype-webapp
+localRepository=/home/mf/.m2/repository
+basedir=/home/mf/workspace/EclipseProjects/maven-archetype-webapp
