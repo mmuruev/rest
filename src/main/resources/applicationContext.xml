@@ -9,7 +9,5 @@
 
     <context:component-scan base-package="ee.mf.rest"/>
 
-    <bean id="transactionBo"
-          class="ee.mf.transaction.impl.CTransactionBoImpl"/>
-
+    <bean id="transactionBo" class="ee.mf.transaction.impl.CTransactionBoImpl"/>
 </beans>
