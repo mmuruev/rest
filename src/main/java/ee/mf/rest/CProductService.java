@@ -33,6 +33,7 @@ public class CProductService {
     }
     @GET
     @Path("products/{category}")
+    @Produces({MediaType.APPLICATION_JSON})
     public List<String> getProducts(@PathParam("category") final String category){
     	List<String> result = new ArrayList<String>();
     	result.add(category); // <<--- for test only
@@ -44,6 +45,7 @@ public class CProductService {
     }
     @GET
     @Path("product/{id}")
+    @Produces({MediaType.APPLICATION_JSON})
     public String getProduct(@PathParam("id") final String id){
     	return "product " + id + "description";
     }
