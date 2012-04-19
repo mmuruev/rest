@@ -2,12 +2,42 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:jdbc="http://www.springframework.org/schema/jdbc" 
        xsi:schemaLocation="http://www.springframework.org/schema/beans
 	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd 
 	http://www.springframework.org/schema/context
 	http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
     <context:component-scan base-package="ee.mf.rest"/>
+    
+    <bean id="database.dataSource" class="org.springframework.jdbc.datasource.LazyConnectionDataSourceProxy">
+	    <constructor-arg>
+	        <bean class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
+	            <property name="driverClass" value="org.h2.Driver" />
+	            <property name="url"
+	                value="jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;MODE=Oracle;TRACE_LEVEL_SYSTEM_OUT=2" />
+	        </bean>
+	    </constructor-arg>
+    </bean>
+    
+     <jdbc:embedded-database id="dataSource">
+        <jdbc:script location="classpath:/sql/db-schema.sql"/>
+        <jdbc:script location="classpath:/sql/db-test-data.sql"/>
+    </jdbc:embedded-database>
+    
+    
+    <jdbc:initialize-database data-source="dataSource">
+  		<jdbc:script location="classpath:com/sql/db-schema.sql"/>
+ 		<jdbc:script location="classpath:com/sql/db-test-data.sql"/>
+	</jdbc:initialize-database>
 
     <bean id="transactionBo" class="ee.mf.transaction.impl.CTransactionBoImpl"/>
+    
+    <bean id = "org.h2.tools.Server"
+            class="org.h2.tools.Server"
+            factory-method="createTcpServer"
+            init-method="start"
+            destroy-method="stop">
+    	<constructor-arg value="-tcp,-tcpAllowOthers,true,-tcpPort,8043" />
+	</bean>
 </beans>
